@@ -1,29 +1,32 @@
-number: '0123456789'
-symbol: "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ €"
-lang_char: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-experiment_name: 'en_filtered'
-train_data: 'all_data'
-valid_data: 'all_data/en_val'
+number: '০১২৩৪৫৬৭৮৯'
+symbol:  "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ €"
+lang_char: ' ঢাকা যশোর খুলনা বগুড়া সিলেট ঝিনাইদহ চট্টগ্রাম গাজীপুর মেট্রো অ আ ই ঈ উ ঊ ঋ এ ঐ ও ঔ ক খ গ ঘ ঙ চ ছ জ ঝ ঞ ট ঠ ড ঢ ণ ত থ দ ধ ন প ফ ব ভ ম য র ল শ ষ স া  ি  ু ী  ূ  ৃ ে ৈ ো  ৌ ড় ঢ় য় ০ ১ ২ ৩ ৪ ৫ ৬ ৭ ৮ ৯'
+# lang_char: 'None'
+experiment_name: 'bn_filtered'
+# train_data: '/content/drive/MyDrive/EasyOCR/trainer/all_data/en_filtered'
+train_data: './all_data/en_filtered'
+valid_data: './all_data/en_filtered'
+# valid_data: '/content/drive/MyDrive/EasyOCR/trainer/all_data/val'
 manualSeed: 1111
-workers: 6
+workers: 2
 batch_size: 32 #32
-num_iter: 300000
-valInterval: 20000
+num_iter: 700
+valInterval: 50
 saved_model: '' #'saved_models/en_filtered/iter_300000.pth'
 FT: False
-optim: False # default is Adadelta
-lr: 1.
+optim: 'adam' # default is Adadelta
+lr: 0.0001
 beta1: 0.9
 rho: 0.95
 eps: 0.00000001
 grad_clip: 5
 #Data processing
-select_data: 'en_train_filtered' # this is dataset folder in train_data
+select_data: './all_data/en_filtered' # this is dataset folder in train_data
 batch_ratio: '1' 
 total_data_usage_ratio: 1.0
-batch_max_length: 34 
-imgH: 64
-imgW: 600
+batch_max_length: 34 #34
+imgH: 32
+imgW: 400
 rgb: False
 contrast_adjust: False
 sensitive: True
@@ -32,13 +35,13 @@ contrast_adjust: 0.0
 data_filtering_off: False
 # Model Architecture
 Transformation: 'None'
-FeatureExtraction: 'VGG'
+FeatureExtraction: 'ResNet'  #'VGG'
 SequenceModeling: 'BiLSTM'
 Prediction: 'CTC'
 num_fiducial: 20
 input_channel: 1
-output_channel: 256
-hidden_size: 256
+output_channel: 512 #256
+hidden_size:  512 #128
 decode: 'greedy'
 new_prediction: False
 freeze_FeatureFxtraction: False

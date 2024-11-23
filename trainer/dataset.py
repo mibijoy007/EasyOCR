@@ -92,6 +92,22 @@ class Batch_Balanced_Dataset(object):
         log.write(Total_batch_size_log + '\n')
         log.close()
 
+    # def get_batch(self):
+    #     balanced_batch_images = []
+    #     balanced_batch_texts = []
+        
+    #     for i, data_loader_iter in enumerate(self.dataloader_iter_list):
+    #         try:
+    #             for image, text in data_loader_iter:
+    #                 balanced_batch_images.append(image)
+    #                 balanced_batch_texts += text
+    #         except StopIteration:
+    #             data_loader_iter = iter(self.data_loader)
+    #             self.dataloader_iter_list[i] = data_loader_iter
+
+    #     return torch.cat(balanced_batch_images, 0), balanced_batch_texts
+
+
     def get_batch(self):
         balanced_batch_images = []
         balanced_batch_texts = []
@@ -112,6 +128,20 @@ class Batch_Balanced_Dataset(object):
         balanced_batch_images = torch.cat(balanced_batch_images, 0)
 
         return balanced_batch_images, balanced_batch_texts
+
+    # def get_batch(self):
+    #     balanced_batch_images = []
+    #     balanced_batch_texts = []
+
+    #     for data_loader_iter in self.dataloader_iter_list:
+    #         for image, text in data_loader_iter:
+    #             balanced_batch_images.append(image)
+    #             balanced_batch_texts += text
+
+    #     balanced_batch_images = torch.cat(balanced_batch_images, 0)
+
+    #     return balanced_batch_images, balanced_batch_texts
+
 
 
 def hierarchical_dataset(root, opt, select_data='/'):
@@ -146,7 +176,8 @@ class OCRDataset(Dataset):
         self.root = root
         self.opt = opt
         print(root)
-        self.df = pd.read_csv(os.path.join(root,'labels.csv'), sep='^([^,]+),', engine='python', usecols=['filename', 'words'], keep_default_na=False)
+#         self.df = pd.read_csv(os.path.join(root,'labels.csv'), sep='^([^,]+),', engine='python', usecols=['filename', 'words'], keep_default_na=False)
+        self.df = pd.read_csv(os.path.join(root,'labels.csv'), sep=',', engine='python', usecols=['filename', 'words'], keep_default_na=False)
         self.nSamples = len(self.df)
 
         if self.opt.data_filtering_off:
